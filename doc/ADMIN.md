@@ -1,0 +1,1 @@
+Open https://__DOMAIN__, pick a display name on the `Create account` tab, and you're federated: you get a fresh address on a chatmail relay and your feed's invite link. Share the invite so people can follow you; paste someone else's invite into the search box to follow them.

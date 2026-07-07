@@ -1,0 +1,3 @@
+Your own single-user social network that federates over encrypted email.
+
+DeltaNet looks and feels like Pleroma/Mastodon, but there is no instance and no ActivityPub: you run a small daemon on your own machine, your identity is an email address on a chatmail relay (registered for you at sign-up, no form to fill), and your feed is an end-to-end-encrypted broadcast channel on the Delta Chat network. Following someone means joining their feed via an invite link. The mail servers only ever see ciphertext, and store-and-forward delivery means your node doesn't need to be online 24/7 to receive posts.
