@@ -6,19 +6,21 @@ After=syslog.target network.target
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__INSTALL_DIR__/
-#Environment="NODE_ENV=production"
+WorkingDirectory=__INSTALL_DIR__/daemon
 Environment="PATH=__PATH_WITH_NODEJS__"
 Environment="PORT=__PORT__"
 ExecStart=__NODEJS_DIR__/pnpm start
 Restart=always
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=deltanet
 
 # Sandboxing options to harden security
 # Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
 NoNewPrivileges=yes
 PrivateTmp=yes
 PrivateDevices=yes
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
 RestrictNamespaces=yes
 RestrictRealtime=yes
 DevicePolicy=closed
