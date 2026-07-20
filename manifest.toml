@@ -39,9 +39,15 @@ ram.runtime = "50M"
     type = "group"
     default = "visitors"
 
+    [install.new_or_restore]
+    type = "select"
+    ask = "Do you want to create a new account or restore from a backup?"
+    choices = ["new", "restore"]
+
     [install.display_name]
     type = "string"
     ask = "What do you want your display name to be?"
+    visible = "new_or_restore == 'new'"
 
     [install.target_relay]
     type = "string"
