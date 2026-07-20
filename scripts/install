@@ -4,6 +4,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -19,7 +20,7 @@ ynh_setup_source --dest_dir="$install_dir"
 #=================================================
 ynh_script_progression "Installing dependencies..."
 
-ynh_hide_warnings corepack enable && corepack prepare pnpm@latest --activate
+ynh_hide_warnings corepack enable && corepack prepare pnpm@$pnpm_version --activate
 
 #=================================================
 # SYSTEM CONFIGURATION
@@ -31,23 +32,26 @@ ynh_config_add_nginx
 
 # Create a dedicated systemd config
 ynh_config_add_systemd
-yunohost service add "$app" --description="DeltaNet"
+yunohost service add "$app" --description="encrypted social network"
 
 # Use logrotate to manage application logfile(s)
 #ynh_config_add_logrotate
 
 #=================================================
-# INSTALL ETHERPAD
+# ADD A CONFIGURATION
+#=================================================
+ynh_script_progression "Adding $app's configuration..."
+
+ynh_config_add --template=".env" --destination="$install_dir/.env"
+
+#=================================================
+# INSTALL APP
 #=================================================
 ynh_script_progression "Installing $app..."
 
-pushd "$install_dir/daemon"
-    ynh_hide_warnings ynh_exec_as_app pnpm install
-popd
-
-pushd "$install_dir/frontend"
-    ynh_hide_warnings ynh_exec_as_app pnpm install
-    ynh_hide_warnings ynh_exec_as_app pnpm build
+pushd "$install_dir"
+    ynh_hide_warnings ynh_exec_as_app pnpm run setup
+    ynh_hide_warnings ynh_exec_as_app pnpm run build
 popd
 
 #=================================================
@@ -55,8 +59,14 @@ popd
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemctl --service="$app" --action=restart
+ynh_systemctl --service="$app" --action=start --log_path=systemd --wait_until="listening on"
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Getting one-time enrollment code..."
+
+__trigger_and_capture_signup
 
 #=================================================
 # END OF SCRIPT

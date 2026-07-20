@@ -1,5 +1,5 @@
 [Unit]
-Description=DeltaNet
+Description=__APP__: encrypted social network
 After=syslog.target network.target
 
 [Service]
@@ -8,12 +8,12 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/daemon
 Environment="PATH=__PATH_WITH_NODEJS__"
-Environment="PORT=__PORT__"
+EnvironmentFile=__INSTALL_DIR__/.env
 ExecStart=__NODEJS_DIR__/pnpm start
 Restart=always
 StandardOutput=journal
 StandardError=journal
-SyslogIdentifier=deltanet
+SyslogIdentifier=headwater
 
 # Sandboxing options to harden security
 # Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html

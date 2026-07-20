@@ -1,0 +1,1 @@
+Check the admin area for instructions on how to get started and your one-time enrollment code.

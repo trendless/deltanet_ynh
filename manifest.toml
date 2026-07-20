@@ -2,21 +2,21 @@
 
 packaging_format = 2
 
-id = "deltanet"
-name = "DeltaNet"
+id = "headwater"
+name = "Headwater"
 description.en = ""
 description.fr = ""
 
-version = "2026.07.06~ynh1"
+version = "2026.07.19~ynh1"
 
 maintainers = [""]
 
 [upstream]
-license = ""
+license = "Unlicense"
 website = ""
 demo = ""
 admindoc = ""
-code = "https://github.com/lambadalambda/deltanet"
+code = "https://github.com/lambadalambda/headwater"
 
 [integration]
 yunohost = ">= 12.1.39"
@@ -37,12 +37,22 @@ ram.runtime = "50M"
 
     [install.init_main_permission]
     type = "group"
-    default = "all_users"
+    default = "visitors"
+
+    [install.display_name]
+    type = "string"
+    ask = "What do you want your display name to be?"
+
+    [install.target_relay]
+    type = "string"
+    ask = "Which chatmail relay do you want to use?"
+    help = "e.g., https://nine.testrun.org"
+    default = "https://nine.testrun.org"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/lambadalambda/deltanet/archive/41ddd02189ab75fa0855376fa9974762a1083060.tar.gz"
-    sha256 = "bd716659f27a13b1ade2fd254dfdc47af6786b4718991ff466c186e27a9dbf8c"
+    url = "https://github.com/lambadalambda/headwater/archive/6131476f33c9b9f5a7ba696d76ab88e39959c07f.tar.gz"
+    sha256 = "d5f43dec1043bfdbfd4bf56d27a7af66d4b9cd9d2c946d3cb06ba30c69330c3e"
     autoupdate.strategy = "latest_github_commit"
 
     [resources.system_user]
@@ -53,6 +63,7 @@ ram.runtime = "50M"
     main.url = "/"
     
     [resources.ports]
+    main.default = 4030
 
     [resources.nodejs]
     version = "24"
